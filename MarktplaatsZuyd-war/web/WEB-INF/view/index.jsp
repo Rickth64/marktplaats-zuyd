@@ -19,7 +19,7 @@
     <div id="pageTextLeft">
         <p>Welkom bij Marktplaats Zuyd!</p>
         <p>Dit is dé plaats om allerlei spullen te kopen of te verkopen. Alle advertenties op deze website zijn voor iedereen toegankelijk.
-        De recentst geplaatste advertenties zijn hiernaast te zien, met een maximum aantal advertenties van 10.</p>
+            De recentst geplaatste advertenties zijn hiernaast te zien, met een maximum aantal advertenties van 10.</p>
         <p>Wilt u zelf een advertentie plaatsen of meebieden? Maak dan meteen een account aan!</p>
     </div>
 </div>
@@ -46,6 +46,3 @@
     </ul>
     <!--</table>-->
 </div>
-</div>
-</body>
-</html>
