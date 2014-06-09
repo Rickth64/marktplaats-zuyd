@@ -24,25 +24,22 @@
     </div>
 </div>
 
-<div id="rightColumn" style="overflow-y: scroll">
-    <h2> recente advertenties</h2>
-    <!--<table id="recentAdvertisementsTable">-->
-    <ul>
+<div id="rightColumn">
+    <h2>${recentAdsCount} recente advertenties</h2>
+    <table class="adsTable">
+        <tr>
+            <th>Titel</th>
+            <th>Prijs</th>
+            <th>Categorie</th>
+        </tr>
+        <c:forEach var="recentAd" items="${recentAds}">
+            <tr>
+                <td><a href="advertisement?${recentAd.idadvertisement}">${recentAd.name}</a></td>
 
-        <c:forEach var="recentad" items="${recentads}">
-            <%--<c:choose>
-                <c:when test="${recentad.price == null}">
-                    <li><a href="advertisement?${recentad.idadvertisement}">${recentad.adname}</a> - GEEN PRIJS OPGEGEVEN (in ${recentad.categoryname})</li>
-                    </c:when>
-                    <c:otherwise>
-                    <li><a href="advertisement?${recentad.idadvertisement}">${recentad.adname}</a> - &#8364; ${recentad.price} (in ${recentad.categoryname})</li>
-                    </c:otherwise>
-                </c:choose>--%>
-            <li>${recentad.name}</li>
-            </c:forEach>
+                <td>&#8364; ${recentAd.price}</td>
 
-
-
-    </ul>
-    <!--</table>-->
+                <td>${recentAd.categoryIdcategory.name}</td>
+            </tr>
+        </c:forEach>
+    </table>
 </div>

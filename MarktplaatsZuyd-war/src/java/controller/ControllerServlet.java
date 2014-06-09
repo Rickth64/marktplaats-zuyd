@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import entity.Advertisement;
+import entity.Category;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,17 +17,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.AdvertisementFacade;
+import session.CategoryFacade;
 
 /**
  *
  * @author rick
  */
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/category", "/placeBidding"})
+@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/categories", "/category", "/advertisement"})
 public class ControllerServlet extends HttpServlet {
-    
+
     @EJB
     private AdvertisementFacade advertisementFacade;
+
+    @EJB
+    private CategoryFacade categoryFacade;
+
     private List<Advertisement> recentAds;
+    private List<Category> allCategories;
+    private Advertisement selectedAd;
+    private Category selectedCategory;
+    private Collection<Advertisement> categoryAds;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,28 +49,76 @@ public class ControllerServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String userPath = request.getServletPath();
 
         // if category page is requested
         if (userPath.equals("/index")) {
+
+            int numberOfAds = advertisementFacade.count();
+
+            if (numberOfAds <= 10) {
+                recentAds = advertisementFacade.findAll();
+                request.setAttribute("recentAdsCount", numberOfAds);
+            } else {
+                recentAds = advertisementFacade.findRange(new int[]{numberOfAds - 10, numberOfAds});
+                request.setAttribute("recentAdsCount", 10);
+            }
+
+            request.setAttribute("recentAds", recentAds);
+
+        } else if (userPath.equals("/categories")) {
+
+            allCategories = categoryFacade.findAll();
+            request.setAttribute("categories", allCategories);
+
+        } else if (userPath.equals("/category")) {
             
-            recentAds = advertisementFacade.findAll();
+            String categoryId = request.getQueryString();
             
-            request.setAttribute("recentads", recentAds);
+            if (categoryId != null) {
+                
+                // get selected category
+                selectedCategory = categoryFacade.find(Integer.parseInt(categoryId));
+                
+                // place selected category in request scope
+                request.setAttribute("selectedCategory", selectedCategory);
+                
+                // get all advertisements for selected category
+                categoryAds = selectedCategory.getAdvertisementCollection();
+                
+                // place category advertisement in request scope
+                request.setAttribute("categoryAds", categoryAds);
+            }
+            
+        } else if (userPath.equals("/advertisement")) {
+
+            // get advertisementId from request
+            String adId = request.getQueryString();
+
+            if (adId != null) {
+
+                // get selected advertisement
+                selectedAd = advertisementFacade.find(Integer.parseInt(adId));
+
+                // place selected advertisement in request scope
+                request.setAttribute("selectedAd", selectedAd);
+            }
+
         }
-        
+
         // use RequestDispatcher to forward request internally
         String url = "/WEB-INF/view" + userPath + ".jsp";
+
         try {
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

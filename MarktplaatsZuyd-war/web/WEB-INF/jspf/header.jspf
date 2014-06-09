@@ -15,12 +15,12 @@
                     <div class="menu">
                         <a href="login.jsp">Inloggen</a>
                         | 
-                        <a href="categories.jsp">Categorieën</a>
+                        <a href="categories">Categorieën</a>
                     </div>
 
                 </div>
 
-                <a href="#">
+                <a href="index">
                     <img src="#" id="logo" alt="Marktplaats Zuyd logo">
                 </a>
 

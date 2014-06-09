@@ -9,5 +9,7 @@
 </div>
 
 <div id="rightColumn">
-    
+    <h2>${selectedAd.name}</h2>
+    <p>${selectedAd.description}</p>
+    <p>${selectedAd.price}</p>
 </div>

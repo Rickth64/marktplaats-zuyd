@@ -30,6 +30,10 @@ li {
     margin-bottom: 25px;
 }
 
+tr {
+    line-height: 40px;
+}
+
 #header {
     height: 250px;
     background: #aaa;
@@ -47,20 +51,12 @@ li {
     width: 600px;
     float: left;
     background: #eee;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 #recentAdvertisements {
     height: 100%;
     width: 100%;
-}
-
-#categoryTitle {
-    margin: -34px 180px 0 0;
-    font-size: x-large;
-    float: right;
-    background-color: #f5eabe;
-    padding: 7px;
 }
 
 #logo {
@@ -69,15 +65,6 @@ li {
     float: left;
     margin-left: 30px;
     margin-top: -20px;
-}
-
-#logoText {
-    float: left;
-    margin: 20px 0 0 70px;
-    /* font styles apply to text within alt tags */
-    font-family: 'American Typewriter', Courier, monospace;
-    font-size: 50px;
-    color: #333;
 }
 
 #menuBar {
@@ -94,6 +81,12 @@ li {
     float: right;
     line-height: 25px;
     background: #aaa;
+}
+
+table.adsTable {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #pageTextLeft {
