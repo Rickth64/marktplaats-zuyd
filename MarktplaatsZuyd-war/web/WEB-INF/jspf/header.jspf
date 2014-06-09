@@ -1,0 +1,28 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home - Marktplaats Zuyd</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/marktplaatszuyd.css">
+    </head>
+    <body>
+        <div id="main">
+            <div id="header">
+                <div id="menuBar">
+
+                    <div class="menu">
+                        <a href="login.jsp">Inloggen</a>
+                        | 
+                        <a href="categories.jsp">Categorieën</a>
+                    </div>
+
+                </div>
+
+                <a href="#">
+                    <img src="#" id="logo" alt="Marktplaats Zuyd logo">
+                </a>
+
+                <h1>Marktplaats Zuyd</h1>
+            </div>
