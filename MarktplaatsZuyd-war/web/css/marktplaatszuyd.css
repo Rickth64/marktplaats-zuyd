@@ -35,14 +35,14 @@ li {
     background: #aaa;
 }
 
-#indexLeftColumn {
+#leftColumn {
     height: 400px;
     width: 250px;
     float: left;
     background: #ccc;
 }
 
-#indexRightColumn {
+#rightColumn {
     height: 400px;
     width: 600px;
     float: left;

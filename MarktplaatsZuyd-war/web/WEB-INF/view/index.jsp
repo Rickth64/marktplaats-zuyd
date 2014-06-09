@@ -15,7 +15,7 @@
     ORDER BY idadvertisement ASC;
 </sql:query>--%>
 
-<div id="indexLeftColumn">
+<div id="leftColumn">
     <div id="pageTextLeft">
         <p>Welkom bij Marktplaats Zuyd!</p>
         <p>Dit is dé plaats om allerlei spullen te kopen of te verkopen. Alle advertenties op deze website zijn voor iedereen toegankelijk.
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div id="indexRightColumn" style="overflow-y: scroll">
+<div id="rightColumn" style="overflow-y: scroll">
     <h2> recente advertenties</h2>
     <!--<table id="recentAdvertisementsTable">-->
     <ul>
