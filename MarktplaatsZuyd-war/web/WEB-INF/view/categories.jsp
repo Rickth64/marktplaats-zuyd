@@ -12,13 +12,20 @@
 </div>
 
 <div id="rightColumn">
-    <ul>
+    <table>
+        <tr>
+            <th>Categorie</th>
+            <th>Aantal advertenties</th>
+        </tr>
 
         <c:forEach var="category" items="${categories}">
-            <li><a href="category?${category.idcategory}">${category.name}</a></li>
+            <tr>
+                <td><a href="category?${category.idcategory}">${category.name}</a></td>
+                <td></td>
+            </tr>
         </c:forEach>
 
 
 
-    </ul>
+    </table>
 </div>

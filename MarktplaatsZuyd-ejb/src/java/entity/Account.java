@@ -15,6 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -52,7 +55,7 @@ public class Account implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 64)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
@@ -65,6 +68,11 @@ public class Account implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "last_name")
     private String lastName;
+    @JoinTable(name = "account_group", joinColumns = {
+        @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")}, inverseJoinColumns = {
+        @JoinColumn(name = "group_idgroup", referencedColumnName = "idgroup")})
+    @ManyToMany
+    private Collection<UserGroup> userGroupCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountIdaccount")
     private Collection<Bidding> biddingCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountIdaccount")
@@ -123,6 +131,15 @@ public class Account implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @XmlTransient
+    public Collection<UserGroup> getUserGroupCollection() {
+        return userGroupCollection;
+    }
+
+    public void setUserGroupCollection(Collection<UserGroup> userGroupCollection) {
+        this.userGroupCollection = userGroupCollection;
     }
 
     @XmlTransient

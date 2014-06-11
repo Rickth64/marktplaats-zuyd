@@ -62,12 +62,12 @@ public class Advertisement implements Serializable {
     private BigDecimal price;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "advertisementIdadvertisement")
     private Collection<Bidding> biddingCollection;
-    @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")
-    @ManyToOne(optional = false)
-    private Account accountIdaccount;
     @JoinColumn(name = "category_idcategory", referencedColumnName = "idcategory")
     @ManyToOne(optional = false)
     private Category categoryIdcategory;
+    @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")
+    @ManyToOne(optional = false)
+    private Account accountIdaccount;
 
     public Advertisement() {
     }
@@ -123,20 +123,20 @@ public class Advertisement implements Serializable {
         this.biddingCollection = biddingCollection;
     }
 
-    public Account getAccountIdaccount() {
-        return accountIdaccount;
-    }
-
-    public void setAccountIdaccount(Account accountIdaccount) {
-        this.accountIdaccount = accountIdaccount;
-    }
-
     public Category getCategoryIdcategory() {
         return categoryIdcategory;
     }
 
     public void setCategoryIdcategory(Category categoryIdcategory) {
         this.categoryIdcategory = categoryIdcategory;
+    }
+
+    public Account getAccountIdaccount() {
+        return accountIdaccount;
+    }
+
+    public void setAccountIdaccount(Account accountIdaccount) {
+        this.accountIdaccount = accountIdaccount;
     }
 
     @Override

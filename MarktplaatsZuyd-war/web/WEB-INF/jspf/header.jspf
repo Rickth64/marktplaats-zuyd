@@ -13,7 +13,7 @@
                 <div id="menuBar">
 
                     <div class="menu">
-                        <a href="login.jsp">Inloggen</a>
+                        <a href="login">Inloggen</a>
                         | 
                         <a href="categories">Categorieën</a>
                     </div>

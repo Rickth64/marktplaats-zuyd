@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.AccountFacade;
 import session.AdvertisementFacade;
 import session.CategoryFacade;
 
@@ -23,7 +24,7 @@ import session.CategoryFacade;
  *
  * @author rick
  */
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/categories", "/category", "/advertisement"})
+@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/categories", "/category", "/advertisement", "/login", "/logout"})
 public class ControllerServlet extends HttpServlet {
 
     @EJB
@@ -31,13 +32,16 @@ public class ControllerServlet extends HttpServlet {
 
     @EJB
     private CategoryFacade categoryFacade;
+    
+    @EJB
+    private AccountFacade accountFacade;
 
     private List<Advertisement> recentAds;
     private List<Category> allCategories;
     private Advertisement selectedAd;
     private Category selectedCategory;
     private Collection<Advertisement> categoryAds;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,7 +58,7 @@ public class ControllerServlet extends HttpServlet {
 
         // if category page is requested
         if (userPath.equals("/index")) {
-
+                    
             int numberOfAds = advertisementFacade.count();
 
             if (numberOfAds <= 10) {
@@ -68,7 +72,7 @@ public class ControllerServlet extends HttpServlet {
             request.setAttribute("recentAds", recentAds);
 
         } else if (userPath.equals("/categories")) {
-
+            
             allCategories = categoryFacade.findAll();
             request.setAttribute("categories", allCategories);
 
@@ -105,6 +109,10 @@ public class ControllerServlet extends HttpServlet {
                 request.setAttribute("selectedAd", selectedAd);
             }
 
+        } else if (userPath.equals("/login")) {
+            // just let it forward to the login action
+        } else if (userPath.equals("/logout")) {
+            request.logout();
         }
 
         // use RequestDispatcher to forward request internally

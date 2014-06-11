@@ -11,5 +11,9 @@
 </div>
 
 <div id="rightColumn">
-    
+    <form action="j_security_check" method="post">  
+        Name:<input type="text" id="j_username" name="j_username"><br>  
+        Password:<input type="password" id="j_password" name="j_password"><br>  
+        <input type="submit" value="login">  
+    </form>  
 </div>

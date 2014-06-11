@@ -45,12 +45,12 @@ public class Bidding implements Serializable {
     @NotNull
     @Column(name = "amount")
     private BigDecimal amount;
-    @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")
-    @ManyToOne(optional = false)
-    private Account accountIdaccount;
     @JoinColumn(name = "advertisement_idadvertisement", referencedColumnName = "idadvertisement")
     @ManyToOne(optional = false)
     private Advertisement advertisementIdadvertisement;
+    @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")
+    @ManyToOne(optional = false)
+    private Account accountIdaccount;
 
     public Bidding() {
     }
@@ -80,20 +80,20 @@ public class Bidding implements Serializable {
         this.amount = amount;
     }
 
-    public Account getAccountIdaccount() {
-        return accountIdaccount;
-    }
-
-    public void setAccountIdaccount(Account accountIdaccount) {
-        this.accountIdaccount = accountIdaccount;
-    }
-
     public Advertisement getAdvertisementIdadvertisement() {
         return advertisementIdadvertisement;
     }
 
     public void setAdvertisementIdadvertisement(Advertisement advertisementIdadvertisement) {
         this.advertisementIdadvertisement = advertisementIdadvertisement;
+    }
+
+    public Account getAccountIdaccount() {
+        return accountIdaccount;
+    }
+
+    public void setAccountIdaccount(Account accountIdaccount) {
+        this.accountIdaccount = accountIdaccount;
     }
 
     @Override

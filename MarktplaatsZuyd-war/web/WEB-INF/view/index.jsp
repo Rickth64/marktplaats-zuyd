@@ -38,7 +38,7 @@
 
                 <td>&#8364; ${recentAd.price}</td>
 
-                <td>${recentAd.categoryIdcategory.name}</td>
+                <td><a href="category?${recentAd.categoryIdcategory.idcategory}">${recentAd.categoryIdcategory.name}</a></td>
             </tr>
         </c:forEach>
     </table>
