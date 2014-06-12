@@ -5,16 +5,11 @@
  */
 package controller;
 
-import entity.Account;
 import entity.Advertisement;
 import entity.Category;
-import entity.UserGroup;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +24,7 @@ import session.CategoryFacade;
  *
  * @author rick
  */
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/categories", "/category", "/advertisement", "/login", "/logout", "/register", "/doRegister"})
+@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/categories", "/category", "/advertisement", "/login", "/logout"})
 public class ControllerServlet extends HttpServlet {
 
     @EJB
@@ -46,7 +41,7 @@ public class ControllerServlet extends HttpServlet {
     private Advertisement selectedAd;
     private Category selectedCategory;
     private Collection<Advertisement> categoryAds;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -59,15 +54,11 @@ public class ControllerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String user = request.getRemoteUser();
-
-        request.setAttribute("user", user);
-
         String userPath = request.getServletPath();
 
         // if category page is requested
         if (userPath.equals("/index")) {
-
+                    
             int numberOfAds = advertisementFacade.count();
 
             if (numberOfAds <= 10) {
@@ -81,29 +72,29 @@ public class ControllerServlet extends HttpServlet {
             request.setAttribute("recentAds", recentAds);
 
         } else if (userPath.equals("/categories")) {
-
+            
             allCategories = categoryFacade.findAll();
             request.setAttribute("categories", allCategories);
 
         } else if (userPath.equals("/category")) {
-
+            
             String categoryId = request.getQueryString();
-
+            
             if (categoryId != null) {
-
+                
                 // get selected category
                 selectedCategory = categoryFacade.find(Integer.parseInt(categoryId));
-
+                
                 // place selected category in request scope
                 request.setAttribute("selectedCategory", selectedCategory);
-
+                
                 // get all advertisements for selected category
                 categoryAds = selectedCategory.getAdvertisementCollection();
-
+                
                 // place category advertisement in request scope
                 request.setAttribute("categoryAds", categoryAds);
             }
-
+            
         } else if (userPath.equals("/advertisement")) {
 
             // get advertisementId from request
@@ -118,33 +109,10 @@ public class ControllerServlet extends HttpServlet {
                 request.setAttribute("selectedAd", selectedAd);
             }
 
+        } else if (userPath.equals("/login")) {
+            // just let it forward to the login action
         } else if (userPath.equals("/logout")) {
             request.logout();
-            response.sendRedirect("index");
-        } else if (userPath.equals("/doRegister")) {
-            
-            //REGISTREREN PROBEERSEL!!!
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            //TODO hash to MD5
-            String firstName = request.getParameter("firstName");
-            String lastName = request.getParameter("lastName");
-            String emailAddress = request.getParameter("email");
-            
-            Account newAccount = new Account();
-            newAccount.setUsername(username);
-            newAccount.setPassword(password);
-            newAccount.setFirstName(firstName);
-            newAccount.setLastName(lastName);
-            newAccount.setEmailAddress(emailAddress);
-            
-            accountFacade.create(newAccount);
-            
-            request.login(username, password);
-            
-            userPath = "/index";
-            
-            //EINDE PROBEERSEL
         }
 
         // use RequestDispatcher to forward request internally
