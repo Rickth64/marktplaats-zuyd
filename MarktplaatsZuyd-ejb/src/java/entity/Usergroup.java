@@ -28,13 +28,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author rick
  */
 @Entity
-@Table(name = "group")
+@Table(name = "usergroup")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserGroup.findAll", query = "SELECT u FROM UserGroup u"),
-    @NamedQuery(name = "UserGroup.findByIdgroup", query = "SELECT u FROM UserGroup u WHERE u.idgroup = :idgroup"),
-    @NamedQuery(name = "UserGroup.findByName", query = "SELECT u FROM UserGroup u WHERE u.name = :name")})
-public class UserGroup implements Serializable {
+    @NamedQuery(name = "Usergroup.findAll", query = "SELECT u FROM Usergroup u"),
+    @NamedQuery(name = "Usergroup.findByIdgroup", query = "SELECT u FROM Usergroup u WHERE u.idgroup = :idgroup"),
+    @NamedQuery(name = "Usergroup.findByName", query = "SELECT u FROM Usergroup u WHERE u.name = :name")})
+public class Usergroup implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,17 +46,17 @@ public class UserGroup implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @ManyToMany(mappedBy = "userGroupCollection")
+    @ManyToMany(mappedBy = "usergroupCollection")
     private Collection<Account> accountCollection;
 
-    public UserGroup() {
+    public Usergroup() {
     }
 
-    public UserGroup(Integer idgroup) {
+    public Usergroup(Integer idgroup) {
         this.idgroup = idgroup;
     }
 
-    public UserGroup(Integer idgroup, String name) {
+    public Usergroup(Integer idgroup, String name) {
         this.idgroup = idgroup;
         this.name = name;
     }
@@ -96,10 +96,10 @@ public class UserGroup implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserGroup)) {
+        if (!(object instanceof Usergroup)) {
             return false;
         }
-        UserGroup other = (UserGroup) object;
+        Usergroup other = (Usergroup) object;
         if ((this.idgroup == null && other.idgroup != null) || (this.idgroup != null && !this.idgroup.equals(other.idgroup))) {
             return false;
         }
@@ -108,7 +108,7 @@ public class UserGroup implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.UserGroup[ idgroup=" + idgroup + " ]";
+        return "entity.Usergroup[ idgroup=" + idgroup + " ]";
     }
     
 }

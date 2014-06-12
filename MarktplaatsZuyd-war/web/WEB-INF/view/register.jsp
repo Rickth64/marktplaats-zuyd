@@ -11,7 +11,7 @@
 </div>
 
 <div id="rightColumn">
-    <h2>Inloggen</h2>
+    <h2>Registreren</h2>
 
     <form action="doRegister" method="post">  
         <table>

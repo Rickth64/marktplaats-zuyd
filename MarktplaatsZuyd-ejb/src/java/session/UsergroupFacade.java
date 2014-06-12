@@ -6,7 +6,7 @@
 
 package session;
 
-import entity.UserGroup;
+import entity.Usergroup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author rick
  */
 @Stateless
-public class UserGroupFacade extends AbstractFacade<UserGroup> {
+public class UsergroupFacade extends AbstractFacade<Usergroup> {
     @PersistenceContext(unitName = "MarktplaatsZuyd-ejbPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class UserGroupFacade extends AbstractFacade<UserGroup> {
         return em;
     }
 
-    public UserGroupFacade() {
-        super(UserGroup.class);
+    public UsergroupFacade() {
+        super(Usergroup.class);
     }
     
 }

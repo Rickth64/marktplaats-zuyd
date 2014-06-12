@@ -9,7 +9,6 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password"),
     @NamedQuery(name = "Account.findByFirstName", query = "SELECT a FROM Account a WHERE a.firstName = :firstName"),
     @NamedQuery(name = "Account.findByLastName", query = "SELECT a FROM Account a WHERE a.lastName = :lastName"),
-    @NamedQuery(name = "Account.findByEmailAddress", query = "SELECT a FROM Account a WHERE a.emailAddress = :emailAddress")})
+    @NamedQuery(name = "Account.findByEmailAdress", query = "SELECT a FROM Account a WHERE a.emailAdress = :emailAdress")})
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,17 +70,13 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "email_address")
-    private String emailAddress;
+    @Column(name = "email_adress")
+    private String emailAdress;
     @JoinTable(name = "account_group", joinColumns = {
         @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")}, inverseJoinColumns = {
         @JoinColumn(name = "group_idgroup", referencedColumnName = "idgroup")})
     @ManyToMany
-    private Collection<UserGroup> userGroupCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountIdaccount")
-    private Collection<Bidding> biddingCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountIdaccount")
-    private Collection<Advertisement> advertisementCollection;
+    private Collection<Usergroup> usergroupCollection;
 
     public Account() {
     }
@@ -91,13 +85,13 @@ public class Account implements Serializable {
         this.idaccount = idaccount;
     }
 
-    public Account(Integer idaccount, String username, String password, String firstName, String lastName, String emailAddress) {
+    public Account(Integer idaccount, String username, String password, String firstName, String lastName, String emailAdress) {
         this.idaccount = idaccount;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.emailAddress = emailAddress;
+        this.emailAdress = emailAdress;
     }
 
     public Integer getIdaccount() {
@@ -140,39 +134,21 @@ public class Account implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmailAdress() {
+        return emailAdress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    @XmlTransient
-    public Collection<UserGroup> getUserGroupCollection() {
-        return userGroupCollection;
-    }
-
-    public void setUserGroupCollection(Collection<UserGroup> userGroupCollection) {
-        this.userGroupCollection = userGroupCollection;
+    public void setEmailAdress(String emailAdress) {
+        this.emailAdress = emailAdress;
     }
 
     @XmlTransient
-    public Collection<Bidding> getBiddingCollection() {
-        return biddingCollection;
+    public Collection<Usergroup> getUsergroupCollection() {
+        return usergroupCollection;
     }
 
-    public void setBiddingCollection(Collection<Bidding> biddingCollection) {
-        this.biddingCollection = biddingCollection;
-    }
-
-    @XmlTransient
-    public Collection<Advertisement> getAdvertisementCollection() {
-        return advertisementCollection;
-    }
-
-    public void setAdvertisementCollection(Collection<Advertisement> advertisementCollection) {
-        this.advertisementCollection = advertisementCollection;
+    public void setUsergroupCollection(Collection<Usergroup> usergroupCollection) {
+        this.usergroupCollection = usergroupCollection;
     }
 
     @Override

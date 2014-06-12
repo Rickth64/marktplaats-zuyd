@@ -9,11 +9,13 @@ import entity.Account;
 import entity.Advertisement;
 import entity.Bidding;
 import entity.Category;
+import entity.Usergroup;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,6 +28,7 @@ import javax.validation.ConstraintViolationException;
 import session.AccountFacade;
 import session.AdvertisementFacade;
 import session.CategoryFacade;
+import session.UsergroupFacade;
 
 /**
  *
@@ -48,6 +51,9 @@ public class ControllerServlet extends HttpServlet {
 
     @EJB
     private AccountFacade accountFacade;
+    
+    @EJB
+    private UsergroupFacade userGroupFacade;
 
     private List<Advertisement> recentAds;
     private List<Category> allCategories;
@@ -158,7 +164,22 @@ public class ControllerServlet extends HttpServlet {
             newAccount.setPassword(password);
             newAccount.setFirstName(firstName);
             newAccount.setLastName(lastName);
-            newAccount.setEmailAddress(emailAddress);
+            newAccount.setEmailAdress(emailAddress);
+            
+            Collection<Usergroup> newAccountGroup = new ArrayList<Usergroup>();
+            
+            List<Usergroup> groups = userGroupFacade.findAll();
+            
+            for (Usergroup group : groups)
+            {
+                if (group.getName().equals("USER"))
+                {
+                    newAccountGroup.add(group);
+                    break;
+                }
+            }
+            
+            newAccount.setUsergroupCollection(newAccountGroup);
 
             try {
                 accountFacade.create(newAccount);
@@ -167,7 +188,7 @@ public class ControllerServlet extends HttpServlet {
             }
 
             //request.login(username, password);
-            userPath = "/index";
+            userPath = "/registerSuccess";
 
             //EINDE PROBEERSEL
         } else if (userPath.equals("/placeAd")) {
