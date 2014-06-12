@@ -11,7 +11,7 @@
 
 <div id="rightColumn">
     <h2>Advertenties in '${selectedCategory.name}'</h2>
-    <table class="adsTable">
+    <table>
         <tr>
             <th>Titel</th>
             <th>Prijs</th>

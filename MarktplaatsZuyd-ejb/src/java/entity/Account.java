@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username"),
     @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password"),
     @NamedQuery(name = "Account.findByFirstName", query = "SELECT a FROM Account a WHERE a.firstName = :firstName"),
-    @NamedQuery(name = "Account.findByLastName", query = "SELECT a FROM Account a WHERE a.lastName = :lastName")})
+    @NamedQuery(name = "Account.findByLastName", query = "SELECT a FROM Account a WHERE a.lastName = :lastName"),
+    @NamedQuery(name = "Account.findByEmailAddress", query = "SELECT a FROM Account a WHERE a.emailAddress = :emailAddress")})
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,6 +69,11 @@ public class Account implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "last_name")
     private String lastName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "email_address")
+    private String emailAddress;
     @JoinTable(name = "account_group", joinColumns = {
         @JoinColumn(name = "account_idaccount", referencedColumnName = "idaccount")}, inverseJoinColumns = {
         @JoinColumn(name = "group_idgroup", referencedColumnName = "idgroup")})
@@ -85,12 +91,13 @@ public class Account implements Serializable {
         this.idaccount = idaccount;
     }
 
-    public Account(Integer idaccount, String username, String password, String firstName, String lastName) {
+    public Account(Integer idaccount, String username, String password, String firstName, String lastName, String emailAddress) {
         this.idaccount = idaccount;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.emailAddress = emailAddress;
     }
 
     public Integer getIdaccount() {
@@ -131,6 +138,14 @@ public class Account implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     @XmlTransient

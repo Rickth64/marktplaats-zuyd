@@ -26,7 +26,7 @@
 
 <div id="rightColumn">
     <h2>${recentAdsCount} recente advertenties</h2>
-    <table class="adsTable">
+    <table>
         <tr>
             <th>Titel</th>
             <th>Prijs</th>
@@ -36,8 +36,15 @@
             <tr>
                 <td><a href="advertisement?${recentAd.idadvertisement}">${recentAd.name}</a></td>
 
-                <td>&#8364; ${recentAd.price}</td>
-
+                <c:choose>
+                    <c:when test="${recentAd.price == null}">
+                        <td>niet opgegeven</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>&#8364; ${recentAd.price}</td>
+                    </c:otherwise>
+                </c:choose>
+                        
                 <td><a href="category?${recentAd.categoryIdcategory.idcategory}">${recentAd.categoryIdcategory.name}</a></td>
             </tr>
         </c:forEach>

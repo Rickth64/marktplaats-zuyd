@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,15 +14,25 @@
                 <div id="menuBar">
 
                     <div class="menu">
-                        <a href="login">Inloggen</a>
-                        | 
-                        <a href="categories">Categorieën</a>
+                        <c:choose>
+                            <c:when test="${user == null}">
+                                <a href="login">Inloggen</a> | 
+                                <a href="register">Registreren</a> | 
+                                <a href="categories">Categorieën</a>
+                            </c:when>
+                            <c:otherwise>
+                                Welkom, ${user} |
+                                <a href="logout">Uitloggen</a> | 
+                                <a href="placeAd">Advertentie plaatsen</a> | 
+                                <a href="categories">Categorieën</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
 
                 </div>
 
                 <a href="index">
-                    <img src="#" id="logo" alt="Marktplaats Zuyd logo">
+                    <img src="images/logoZUYD.png" id="logo" alt="Marktplaats Zuyd logo">
                 </a>
 
                 <h1>Marktplaats Zuyd</h1>

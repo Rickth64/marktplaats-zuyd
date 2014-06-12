@@ -12,6 +12,7 @@
 </div>
 
 <div id="rightColumn">
+    <h2>Alle categorieën</h2>
     <table>
         <tr>
             <th>Categorie</th>

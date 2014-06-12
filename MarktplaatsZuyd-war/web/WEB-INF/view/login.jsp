@@ -6,14 +6,25 @@
 
 <div id="leftColumn">
     <div id="pageTextLeft">
-        <p>Informatie over inloggen</p>
+        <p>U bevindt zich momenteel op onze inlogpagina. Vul hiernaast uw gebruikersnaam en wachtwoord in en klik vervolgens op 'inloggen'.</p>
+        <p>Nog geen account? Klik dan rechtsboven op 'registreren' om een account aan te maken.</p>
     </div>
 </div>
 
 <div id="rightColumn">
+    <h2>Inloggen</h2>
+
     <form action="j_security_check" method="post">  
-        Name:<input type="text" id="j_username" name="j_username"><br>  
-        Password:<input type="password" id="j_password" name="j_password"><br>  
-        <input type="submit" value="login">  
+        <table>
+            <tr>
+                <td>Gebruikersnaam:</td>
+                <td><input type="text" id="j_username" name="j_username"></td>
+            </tr>
+            <tr>
+                <td>Wachtwoord:</td>
+                <td><input type="password" id="j_password" name="j_password"></td>  
+            </tr>
+        </table>
+        <input type="submit" value="Inloggen">
     </form>  
 </div>

@@ -39,7 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Advertisement.findByIdadvertisement", query = "SELECT a FROM Advertisement a WHERE a.idadvertisement = :idadvertisement"),
     @NamedQuery(name = "Advertisement.findByName", query = "SELECT a FROM Advertisement a WHERE a.name = :name"),
     @NamedQuery(name = "Advertisement.findByDescription", query = "SELECT a FROM Advertisement a WHERE a.description = :description"),
-    @NamedQuery(name = "Advertisement.findByPrice", query = "SELECT a FROM Advertisement a WHERE a.price = :price")})
+    @NamedQuery(name = "Advertisement.findByPrice", query = "SELECT a FROM Advertisement a WHERE a.price = :price"),
+    @NamedQuery(name = "Advertisement.findByContactemail", query = "SELECT a FROM Advertisement a WHERE a.contactemail = :contactemail"),
+    @NamedQuery(name = "Advertisement.findByContactphone", query = "SELECT a FROM Advertisement a WHERE a.contactphone = :contactphone"),
+    @NamedQuery(name = "Advertisement.findByContactaddress", query = "SELECT a FROM Advertisement a WHERE a.contactaddress = :contactaddress")})
 public class Advertisement implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,6 +63,15 @@ public class Advertisement implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "price")
     private BigDecimal price;
+    @Size(max = 100)
+    @Column(name = "contactemail")
+    private String contactemail;
+    @Size(max = 45)
+    @Column(name = "contactphone")
+    private String contactphone;
+    @Size(max = 256)
+    @Column(name = "contactaddress")
+    private String contactaddress;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "advertisementIdadvertisement")
     private Collection<Bidding> biddingCollection;
     @JoinColumn(name = "category_idcategory", referencedColumnName = "idcategory")
@@ -112,6 +124,30 @@ public class Advertisement implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getContactemail() {
+        return contactemail;
+    }
+
+    public void setContactemail(String contactemail) {
+        this.contactemail = contactemail;
+    }
+
+    public String getContactphone() {
+        return contactphone;
+    }
+
+    public void setContactphone(String contactphone) {
+        this.contactphone = contactphone;
+    }
+
+    public String getContactaddress() {
+        return contactaddress;
+    }
+
+    public void setContactaddress(String contactaddress) {
+        this.contactaddress = contactaddress;
     }
 
     @XmlTransient
