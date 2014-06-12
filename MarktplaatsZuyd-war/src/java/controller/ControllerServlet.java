@@ -10,8 +10,10 @@ import entity.Advertisement;
 import entity.Bidding;
 import entity.Category;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -33,7 +35,7 @@ import session.CategoryFacade;
         loadOnStartup = 1,
         urlPatterns = {"/index", "/categories", "/category", "/advertisement",
             "/login", "/logout", "/register", "/doRegister",
-            "/placeAd"})
+            "/placeAd", "/doPlaceAd", "/placeAdSuccess"})
 public class ControllerServlet extends HttpServlet {
 
     @EJB
@@ -166,6 +168,32 @@ public class ControllerServlet extends HttpServlet {
             userPath = "/index";
 
             //EINDE PROBEERSEL
+        } else if (userPath.equals("/placeAd")) {
+            allCategories = categoryFacade.findAll();
+            request.setAttribute("categories", allCategories);
+        } else if (userPath.equals("/doPlaceAd")) {
+            
+            String title = request.getParameter("adTitle");
+            Category category = categoryFacade.find(Integer.parseInt(request.getParameter("selectedCategory")));
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+            String home = request.getParameter("home");
+            String description = request.getParameter("description");
+            Double price = Double.parseDouble(request.getParameter("price"));
+            
+            Advertisement newAd = new Advertisement();
+            newAd.setName(title);
+            newAd.setCategoryIdcategory(category);
+            newAd.setContactphone(phone);
+            newAd.setContactemail(email);
+            newAd.setContactaddress(home);
+            newAd.setDescription(description);
+            newAd.setPrice(BigDecimal.valueOf(price));
+            newAd.setAccountIdaccount(accountFacade.getAccountByUsername(user));
+            
+            advertisementFacade.create(newAd);
+            
+            userPath = "/placeAdSuccess";
         }
 
         // use RequestDispatcher to forward request internally

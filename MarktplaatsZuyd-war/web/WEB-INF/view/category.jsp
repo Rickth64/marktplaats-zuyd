@@ -6,7 +6,9 @@
 --%>
 
 <div id="leftColumn">
-    
+    <div id ="pageTextLeft">
+        <p>Hiernaast vindt u alle advertenties binnen de categorie '${selectedCategory.name}'</p>
+    </div>
 </div>
 
 <div id="rightColumn">

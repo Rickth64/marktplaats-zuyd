@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entity.Account;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AccountFacade extends AbstractFacade<Account> {
+
     @PersistenceContext(unitName = "MarktplaatsZuyd-ejbPU")
     private EntityManager em;
 
@@ -28,6 +30,13 @@ public class AccountFacade extends AbstractFacade<Account> {
     public AccountFacade() {
         super(Account.class);
     }
-}
-    
 
+    public Account getAccountByUsername(String username) {
+        //EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("UniversityApplicationPU");
+        //EntityManager em = emFactory.createEntityManager();
+        //em.getTransaction.begin();
+        Query query = getEntityManager().createNamedQuery("Account.findByUsername");
+        query.setParameter("username", username);
+        return (Account)query.getResultList().get(0);
+    }
+}

@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td>Achternaam:</td>
-                <td><input type="password" name="lastName"></td>  
+                <td><input type="text" name="lastName"></td>  
             </tr>
             <tr>
                 <td>E-mailadres:</td>
