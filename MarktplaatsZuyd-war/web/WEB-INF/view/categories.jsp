@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%-- 
     Document   : categories
     Created on : 7-jun-2014, 17:20:02
@@ -22,7 +23,7 @@
         <c:forEach var="category" items="${categories}">
             <tr>
                 <td><a href="category?${category.idcategory}">${category.name}</a></td>
-                <td></td>
+                <td>${fn:length(category.advertisementCollection)}</td>
             </tr>
         </c:forEach>
 

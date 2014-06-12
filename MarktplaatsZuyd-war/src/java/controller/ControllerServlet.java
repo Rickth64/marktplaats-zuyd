@@ -7,20 +7,20 @@ package controller;
 
 import entity.Account;
 import entity.Advertisement;
+import entity.Bidding;
 import entity.Category;
-import entity.UserGroup;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 import session.AccountFacade;
 import session.AdvertisementFacade;
 import session.CategoryFacade;
@@ -29,7 +29,11 @@ import session.CategoryFacade;
  *
  * @author rick
  */
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/index", "/categories", "/category", "/advertisement", "/login", "/logout", "/register", "/doRegister"})
+@WebServlet(name = "ControllerServlet",
+        loadOnStartup = 1,
+        urlPatterns = {"/index", "/categories", "/category", "/advertisement",
+            "/login", "/logout", "/register", "/doRegister",
+            "/placeAd"})
 public class ControllerServlet extends HttpServlet {
 
     @EJB
@@ -37,7 +41,7 @@ public class ControllerServlet extends HttpServlet {
 
     @EJB
     private CategoryFacade categoryFacade;
-    
+
     @EJB
     private AccountFacade accountFacade;
 
@@ -46,6 +50,8 @@ public class ControllerServlet extends HttpServlet {
     private Advertisement selectedAd;
     private Category selectedCategory;
     private Collection<Advertisement> categoryAds;
+    private Collection<Bidding> selectedAdBiddings;
+    private Account selectedAdSeller;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -116,34 +122,49 @@ public class ControllerServlet extends HttpServlet {
 
                 // place selected advertisement in request scope
                 request.setAttribute("selectedAd", selectedAd);
+
+                selectedAdSeller = selectedAd.getAccountIdaccount();
+
+                request.setAttribute("seller", selectedAdSeller);
             }
 
         } else if (userPath.equals("/logout")) {
             request.logout();
             response.sendRedirect("index");
         } else if (userPath.equals("/doRegister")) {
-            
+
             //REGISTREREN PROBEERSEL!!!
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             //TODO hash to MD5
+            try {
+                MessageDigest md5 = MessageDigest.getInstance("MD5");
+                byte[] tmp = password.getBytes();
+                md5.update(tmp);
+                password = byteArrToString(md5.digest());
+            } catch (NoSuchAlgorithmException exc) {
+
+            }
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String emailAddress = request.getParameter("email");
-            
+
             Account newAccount = new Account();
             newAccount.setUsername(username);
             newAccount.setPassword(password);
             newAccount.setFirstName(firstName);
             newAccount.setLastName(lastName);
             newAccount.setEmailAddress(emailAddress);
-            
-            accountFacade.create(newAccount);
-            
-            request.login(username, password);
-            
+
+            try {
+                accountFacade.create(newAccount);
+            } catch (ConstraintViolationException exc) {
+                exc.getConstraintViolations();
+            }
+
+            //request.login(username, password);
             userPath = "/index";
-            
+
             //EINDE PROBEERSEL
         }
 
@@ -156,6 +177,20 @@ public class ControllerServlet extends HttpServlet {
             ex.printStackTrace();
         }
 
+    }
+
+    private static String byteArrToString(byte[] b) {
+        String res = null;
+        StringBuffer sb = new StringBuffer(b.length * 2);
+        for (int i = 0; i < b.length; i++) {
+            int j = b[i] & 0xff;
+            if (j < 16) {
+                sb.append('0');
+            }
+            sb.append(Integer.toHexString(j));
+        }
+        res = sb.toString();
+        return res.toUpperCase();
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
