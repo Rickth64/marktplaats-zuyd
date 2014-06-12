@@ -6,32 +6,35 @@
 --%>
 
 <div id="leftColumn">
-    <p>Gegevens van verkoper '${seller.username}'</p>
-    <c:if test="${selectedAd.contactemail != null}">
-        <p>e-mail: ${selectedAd.contactemail}</p>
-    </c:if>
-    <c:if test="${selectedAd.contactphone != null}">
-        <p>tel: ${selectedAd.contactphone}</p>
-    </c:if>
-    <c:if test="${selectedAd.contactaddress != null}">
-        <p>adres: ${selectedAd.contactaddress}</p>
-    </c:if>
-    <p>Biedingen</p>
-    <ul>
-    <c:forEach var="bidding" items="${selectedAd.biddingCollection}">
-        <li>&#8364; ${bidding.amount}</li>
-    </c:forEach>
-    </ul>
-    <c:if test="${user != null}">
-        <form action="placeBidding" method="post">
-            <input type="submit" value="Bod plaatsen">
-        </form>
-    </c:if>
-
+    <div id="pageTextLeft">
+        <b>Gegevens van verkoper '${seller.username}'</b>
+        <c:if test="${selectedAd.contactemail != ''}">
+            <p>e-mail: ${selectedAd.contactemail}</p>
+        </c:if>
+        <c:if test="${selectedAd.contactphone != ''}">
+            <p>tel: ${selectedAd.contactphone}</p>
+        </c:if>
+        <c:if test="${selectedAd.contactaddress != ''}">
+            <p>adres: ${selectedAd.contactaddress}</p>
+        </c:if>
+        <c:if test="${selected.biddingCollection > 0}">
+            <b>Biedingen</b>
+            <ul>
+                <c:forEach var="bidding" items="${selectedAd.biddingCollection}">
+                    <li>&#8364; ${bidding.amount}</li>
+                    </c:forEach>
+            </ul>
+        </c:if>
+        <c:if test="${user != null}">
+            <form action="placeBidding?${selectedAd.idadvertisement}" method="post">
+                <input type="submit" value="Bod plaatsen">
+            </form>
+        </c:if>
+    </div>
 </div>
 
 <div id="rightColumn">
     <h2>${selectedAd.name}</h2>
     <p>${selectedAd.description}</p>
-    <p>${selectedAd.price}</p>
+    <p>Vraagprijs: &#8364; ${selectedAd.price}</p>
 </div>

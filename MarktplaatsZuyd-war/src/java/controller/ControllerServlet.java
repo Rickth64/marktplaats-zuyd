@@ -34,8 +34,10 @@ import session.CategoryFacade;
 @WebServlet(name = "ControllerServlet",
         loadOnStartup = 1,
         urlPatterns = {"/index", "/categories", "/category", "/advertisement",
-            "/login", "/logout", "/register", "/doRegister",
-            "/placeAd", "/doPlaceAd", "/placeAdSuccess"})
+            "/login", "/logout",
+            "/register", "/doRegister", "/registerSuccess",
+            "/placeAd", "/doPlaceAd", "/placeAdSuccess",
+            "/placeBidding", "/doPlaceBidding"})
 public class ControllerServlet extends HttpServlet {
 
     @EJB
@@ -172,15 +174,18 @@ public class ControllerServlet extends HttpServlet {
             allCategories = categoryFacade.findAll();
             request.setAttribute("categories", allCategories);
         } else if (userPath.equals("/doPlaceAd")) {
-            
+
             String title = request.getParameter("adTitle");
             Category category = categoryFacade.find(Integer.parseInt(request.getParameter("selectedCategory")));
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String home = request.getParameter("home");
             String description = request.getParameter("description");
-            Double price = Double.parseDouble(request.getParameter("price"));
-            
+            BigDecimal price = null;
+            if (!request.getParameter("price").equals("")) {
+                price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
+            }
+
             Advertisement newAd = new Advertisement();
             newAd.setName(title);
             newAd.setCategoryIdcategory(category);
@@ -188,12 +193,25 @@ public class ControllerServlet extends HttpServlet {
             newAd.setContactemail(email);
             newAd.setContactaddress(home);
             newAd.setDescription(description);
-            newAd.setPrice(BigDecimal.valueOf(price));
+            newAd.setPrice(price);
+
             newAd.setAccountIdaccount(accountFacade.getAccountByUsername(user));
-            
+
             advertisementFacade.create(newAd);
             
             userPath = "/placeAdSuccess";
+        } else if (userPath.equals("/placeBidding")) {
+            // get advertisementId from request
+            String adId = request.getQueryString();
+
+            if (adId != null) {
+
+                // get selected advertisement
+                selectedAd = advertisementFacade.find(Integer.parseInt(adId));
+
+                // place selected advertisement in request scope
+                request.setAttribute("selectedAd", selectedAd);
+            }
         }
 
         // use RequestDispatcher to forward request internally
