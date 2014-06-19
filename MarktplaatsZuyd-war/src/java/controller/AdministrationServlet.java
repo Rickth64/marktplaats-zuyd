@@ -6,6 +6,7 @@
 package controller;
 
 import entity.Advertisement;
+import entity.Bidding;
 import entity.Category;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -17,13 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.AdvertisementFacade;
+import session.BiddingFacade;
 import session.CategoryFacade;
 
 /**
  *
  * @author rick
  */
-@WebServlet(name = "AdministrationServlet", urlPatterns = {"/changeAd", "/doChangeAd", "/changeBidding", "/changeAccount"})
+@WebServlet(name = "AdministrationServlet", urlPatterns = {"/changeAd", "/doChangeAd", "/changeBidding", "/doChangeBidding", "/changeAccount"})
 public class AdministrationServlet extends HttpServlet {
 
     @EJB
@@ -31,6 +33,9 @@ public class AdministrationServlet extends HttpServlet {
 
     @EJB
     CategoryFacade categoryFacade;
+
+    @EJB
+    BiddingFacade biddingFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -72,7 +77,13 @@ public class AdministrationServlet extends HttpServlet {
         } else if (userPath.equals("/doChangeAd")) {
 
             Advertisement adv = advertisementFacade.find(Integer.parseInt(request.getParameter("adId")));
-            
+
+            if (!adv.getAccountIdaccount().getUsername().equals(request.getRemoteUser()) && !request.isUserInRole("admin")) {
+                //TODO replace by redirecting to error page?
+                response.sendRedirect("index");
+                return;
+            }
+
             String action = request.getParameter("action");
 
             if (action.equals("update")) {
@@ -88,6 +99,8 @@ public class AdministrationServlet extends HttpServlet {
                 if (!request.getParameter("price").equals("")) {
                     price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
                 }
+
+                // update fields
                 adv.setName(title);
                 adv.setCategoryIdcategory(category);
                 adv.setContactphone(phone);
@@ -95,18 +108,64 @@ public class AdministrationServlet extends HttpServlet {
                 adv.setContactaddress(home);
                 adv.setDescription(description);
                 adv.setPrice(price);
-                
+
                 advertisementFacade.edit(adv);
-                
+
                 //TODO forward to success page?
                 response.sendRedirect("index");
 
             } else if (action.equals("delete")) {
 
                 advertisementFacade.remove(adv);
+
+                //TODO forward to success page?
+                response.sendRedirect("index");
+            }
+        } else if (userPath.equals("/changeBidding")) {
+
+            String biddingId = request.getQueryString();
+
+            if (biddingId != null) {
+                // get selected advertisement
+                Bidding bidding = biddingFacade.find(Integer.parseInt(biddingId));
+
+                if (!bidding.getAccountIdaccount().getUsername().equals(request.getRemoteUser()) && !request.isUserInRole("admin")) {
+                    //TODO replace by redirecting to error page?
+                    response.sendRedirect("index");
+                    return;
+                }
+                
+                request.setAttribute("biddingToChange", bidding);
+            }
+
+        } else if (userPath.equals("/doChangeBidding")) {
+            
+            Bidding bidding = biddingFacade.find(Integer.parseInt(request.getParameter("biddingId")));
+
+            if (!bidding.getAccountIdaccount().getUsername().equals(request.getRemoteUser()) && !request.isUserInRole("admin")) {
+                //TODO replace by redirecting to error page?
+                response.sendRedirect("index");
+                return;
+            }
+
+            String action = request.getParameter("action");
+
+            if (action.equals("update")) {
+                
+                bidding.setAmount(BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount"))));
+                
+                biddingFacade.edit(bidding);
                 
                 //TODO forward to success page?
                 response.sendRedirect("index");
+            
+            } else if (action.equals("delete")) {
+                
+                biddingFacade.remove(bidding);
+                
+                //TODO forward to success page?
+                response.sendRedirect("index");
+                
             }
         }
 

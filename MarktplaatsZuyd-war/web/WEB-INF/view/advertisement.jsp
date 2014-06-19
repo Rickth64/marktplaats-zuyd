@@ -22,8 +22,17 @@
             <b>Biedingen</b>
             <ul>
                 <c:forEach var="bidding" items="${selectedAd.biddingCollection}">
-                    <li>&#8364; ${bidding.amount}</li>
-                    </c:forEach>
+                    <li>
+                        <c:choose>
+                            <c:when test="${bidding.accountIdaccount.username == pageContext.request.remoteUser || pageContext.request.isUserInRole('admin')}">
+                                <p>&#8364; ${bidding.amount} <a href="changeBidding?${bidding.idbidding}">(wijzigen)</a><br />geboden door '${bidding.accountIdaccount.username}'</p>
+                            </c:when>
+                            <c:otherwise>
+                                <p>&#8364; ${bidding.amount}<br />geboden door '${bidding.accountIdaccount.username}'</p>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </c:forEach>
             </ul>
         </c:if>
         <c:if test="${pageContext.request.remoteUser != null && pageContext.request.remoteUser != selectedAd.accountIdaccount.username && !pageContext.request.isUserInRole('admin')}">

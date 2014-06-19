@@ -31,6 +31,22 @@
             <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>Constraint2</display-name>
+        <web-resource-collection>
+            <web-resource-name>admin-pages</web-resource-name>
+            <description/>
+            <url-pattern>/changeAd</url-pattern>
+            <url-pattern>/doChangeAd</url-pattern>
+            <url-pattern>/changeBidding</url-pattern>
+            <url-pattern>/doChangeBidding</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>admin</role-name>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>MarktplaatsZuydRealm</realm-name>
