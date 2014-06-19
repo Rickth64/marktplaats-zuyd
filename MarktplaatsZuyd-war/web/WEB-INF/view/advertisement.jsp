@@ -26,9 +26,14 @@
                     </c:forEach>
             </ul>
         </c:if>
-        <c:if test="${user != null}">
+        <c:if test="${pageContext.request.remoteUser != null && pageContext.request.remoteUser != selectedAd.accountIdaccount.username && !pageContext.request.isUserInRole('admin')}">
             <form action="placeBidding?${selectedAd.idadvertisement}" method="post">
                 <input type="submit" value="Bod plaatsen">
+            </form>
+        </c:if>
+        <c:if test="${pageContext.request.isUserInRole('admin') || pageContext.request.remoteUser == selectedAd.accountIdaccount.username}">
+            <form action="changeAd?${selectedAd.idadvertisement}" method="post">
+                <input type="submit" value="Advertentie beheren">
             </form>
         </c:if>
     </div>

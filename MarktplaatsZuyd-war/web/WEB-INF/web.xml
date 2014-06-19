@@ -22,12 +22,13 @@
             <web-resource-name>logged-in-user-pages</web-resource-name>
             <description>pages for logged in users only</description>
             <url-pattern>/placeAd</url-pattern>
+            <url-pattern>/doPlaceAd</url-pattern>
             <url-pattern>/placeBidding</url-pattern>
+            <url-pattern>/doPlaceBidding</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>user</role-name>
-            <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>

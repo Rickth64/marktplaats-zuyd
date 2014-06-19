@@ -15,15 +15,17 @@
 
                     <div class="menu">
                         <c:choose>
-                            <c:when test="${user == null}">
+                            <c:when test="${pageContext.request.remoteUser == null}">
                                 <a href="login">Inloggen</a> | 
                                 <a href="register">Registreren</a> | 
                                 <a href="categories">Categorieën</a>
                             </c:when>
                             <c:otherwise>
-                                Welkom, ${user} |
-                                <a href="logout">Uitloggen</a> | 
-                                <a href="placeAd">Advertentie plaatsen</a> | 
+                                Welkom, ${pageContext.request.remoteUser} |
+                                <a href="logout">Uitloggen</a> |
+                                <c:if test="${!pageContext.request.isUserInRole('admin')}">
+                                    <a href="placeAd">Advertentie plaatsen</a> |
+                                </c:if>
                                 <a href="categories">Categorieën</a>
                             </c:otherwise>
                         </c:choose>

@@ -6,34 +6,31 @@
 package controller;
 
 import entity.Advertisement;
-import entity.Bidding;
+import entity.Category;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import session.AccountFacade;
 import session.AdvertisementFacade;
-import session.BiddingFacade;
+import session.CategoryFacade;
 
 /**
  *
  * @author rick
  */
-@WebServlet(name = "BiddingServlet", urlPatterns = {"/placeBidding", "/doPlaceBidding"})
-public class BiddingServlet extends HttpServlet {
+@WebServlet(name = "AdministrationServlet", urlPatterns = {"/changeAd", "/doChangeAd", "/changeBidding", "/changeAccount"})
+public class AdministrationServlet extends HttpServlet {
 
     @EJB
-    private AdvertisementFacade advertisementFacade;
+    AdvertisementFacade advertisementFacade;
 
     @EJB
-    private BiddingFacade biddingFacade;
-
-    @EJB
-    private AccountFacade accountFacade;
+    CategoryFacade categoryFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,50 +44,70 @@ public class BiddingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //request.setAttribute("user", request.getRemoteUser());
-
         String userPath = request.getServletPath();
 
-        if (userPath.equals("/placeBidding")) {
+        if (userPath.equals("/changeAd")) {
 
-            // get advertisement id from request
             String adId = request.getQueryString();
 
             if (adId != null) {
-
                 // get selected advertisement
                 Advertisement selectedAd = advertisementFacade.find(Integer.parseInt(adId));
 
+                if (!selectedAd.getAccountIdaccount().getUsername().equals(request.getRemoteUser()) && !request.isUserInRole("admin")) {
+                    //TODO replace by redirecting to error page?
+                    response.sendRedirect("index");
+                    return;
+                }
+
                 // place selected advertisement in request scope
-                request.setAttribute("selectedAd", selectedAd);
+                request.setAttribute("adToChange", selectedAd);
+
+                // get all available categories
+                List<Category> allCategories = categoryFacade.findAll();
+
+                // place all available categories in request scope
+                request.setAttribute("availableCategories", allCategories);
             }
-        } else if (userPath.equals("/doPlaceBidding")) {
+        } else if (userPath.equals("/doChangeAd")) {
 
-            // get advertisement id from request
-            String adId = request.getParameter("selectedAdId");
+            Advertisement adv = advertisementFacade.find(Integer.parseInt(request.getParameter("adId")));
+            
+            String action = request.getParameter("action");
 
-            // get advertisement to place bid on
-            Advertisement ad = advertisementFacade.find(Integer.parseInt(adId));
+            if (action.equals("update")) {
 
-            // create a new bidding entity
-            Bidding bidding = new Bidding();
-            bidding.setAccountIdaccount(accountFacade.getAccountByUsername(request.getRemoteUser()));
-            bidding.setAdvertisementIdadvertisement(ad);
-            bidding.setAmount(BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount"))));
+                // get all field values for new advertisement from the request
+                String title = request.getParameter("adTitle");
+                Category category = categoryFacade.find(Integer.parseInt(request.getParameter("selectedCategory")));
+                String phone = request.getParameter("phone");
+                String email = request.getParameter("email");
+                String home = request.getParameter("home");
+                String description = request.getParameter("description");
+                BigDecimal price = null;
+                if (!request.getParameter("price").equals("")) {
+                    price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
+                }
+                adv.setName(title);
+                adv.setCategoryIdcategory(category);
+                adv.setContactphone(phone);
+                adv.setContactemail(email);
+                adv.setContactaddress(home);
+                adv.setDescription(description);
+                adv.setPrice(price);
+                
+                advertisementFacade.edit(adv);
+                
+                //TODO forward to success page?
+                response.sendRedirect("index");
 
-            try {
+            } else if (action.equals("delete")) {
 
-                // create the bidding through the bidding facade, this invokes bean validation
-                biddingFacade.create(bidding);
-            } catch (javax.validation.ConstraintViolationException ex) {
-                ex.getConstraintViolations();
-                //TODO handle exception, chances of hitting this catch clause should be reduced by implementing validators on the HTML form in 'placeBidding.jsp'
+                advertisementFacade.remove(adv);
+                
+                //TODO forward to success page?
+                response.sendRedirect("index");
             }
-
-            //request.getRequestDispatcher("/advertisement?" + adId).forward(request, response);
-            //response.sendRedirect("/advertisement?" + adId);
-            // let it forward to a confirmation page
-            userPath = "/placeBiddingSuccess";
         }
 
         // use RequestDispatcher to forward request internally

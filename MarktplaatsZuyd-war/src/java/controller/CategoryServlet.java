@@ -40,7 +40,7 @@ public class CategoryServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setAttribute("user", request.getRemoteUser());
+        //request.setAttribute("user", request.getRemoteUser());
 
         String userPath = request.getServletPath();
 
