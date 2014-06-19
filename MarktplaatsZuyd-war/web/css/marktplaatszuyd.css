@@ -45,6 +45,7 @@ tr {
     width: 250px;
     float: left;
     background: #ccc;
+    overflow-y: scroll;
 }
 
 #rightColumn {

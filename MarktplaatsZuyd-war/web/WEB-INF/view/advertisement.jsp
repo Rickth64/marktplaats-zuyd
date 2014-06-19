@@ -8,7 +8,7 @@
 
 <div id="leftColumn">
     <div id="pageTextLeft">
-        <b>Gegevens van verkoper '${seller.username}'</b>
+        <b>Gegevens van verkoper '${selectedAd.accountIdaccount.username}'</b>
         <c:if test="${selectedAd.contactemail != ''}">
             <p>e-mail: ${selectedAd.contactemail}</p>
         </c:if>

@@ -26,7 +26,7 @@
                 <td>Categorie:</td>
                 <td>
                     <select name="selectedCategory">
-                        <c:forEach var="category" items="${categories}">
+                        <c:forEach var="category" items="${availableCategories}">
                             <option value="${category.idcategory}">${category.name}</option>
                         </c:forEach>
                     </select>

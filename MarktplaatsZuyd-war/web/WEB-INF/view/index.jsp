@@ -1,19 +1,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%-- 
     Document   : index
     Created on : 8-jun-2014, 13:40:53
     Author     : rick
 --%>
-
-<%--
-<sql:query var="recentads" dataSource="jdbc/marktplaatszuyd">
-    (SELECT idadvertisement, price, category.name AS categoryname, advertisement.name AS adname
-    FROM category, advertisement
-    WHERE category.idcategory = advertisement.category_idcategory
-    ORDER BY idadvertisement DESC LIMIT 10)
-    ORDER BY idadvertisement ASC;
-</sql:query>--%>
 
 <div id="leftColumn">
     <div id="pageTextLeft">
@@ -25,7 +16,7 @@
 </div>
 
 <div id="rightColumn">
-    <h2>${recentAdsCount} recente advertenties</h2>
+    <h2>${fn:length(recentAds)} recente advertenties</h2>
     <table>
         <tr>
             <th>Titel</th>
