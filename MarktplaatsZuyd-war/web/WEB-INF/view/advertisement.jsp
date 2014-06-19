@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%-- 
     Document   : advertisement
     Created on : 7-jun-2014, 17:20:58
@@ -17,7 +18,7 @@
         <c:if test="${selectedAd.contactaddress != ''}">
             <p>adres: ${selectedAd.contactaddress}</p>
         </c:if>
-        <c:if test="${selected.biddingCollection > 0}">
+        <c:if test="${fn:length(selectedAd.biddingCollection) > 0}">
             <b>Biedingen</b>
             <ul>
                 <c:forEach var="bidding" items="${selectedAd.biddingCollection}">

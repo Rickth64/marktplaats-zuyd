@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td>Beschrijving:</td>
-                <td><input type="text" name="description" style="width:100%;height:100px;"></td>
+                <td><textarea name="description" style="width: 100%;height: 100px;max-width: 100%;max-height: 90px;"></textarea></td>
             </tr>
             <tr>
                 <td>Prijs:</td>

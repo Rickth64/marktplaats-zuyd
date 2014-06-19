@@ -13,7 +13,8 @@
 <div id="rightColumn">
     <h2>Bod plaatsen - ${selectedAd.name}</h2>
 
-    <form action="doPlaceBidding" method="post">  
+    <form action="doPlaceBidding" method="post"> 
+        <input type="hidden" name="selectedAdId" value="${selectedAd.idadvertisement}">
         <table>
             <tr>
                 <td>Bedrag (in &#8364;)</td>

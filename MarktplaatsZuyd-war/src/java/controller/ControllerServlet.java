@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import session.AccountFacade;
 import session.AdvertisementFacade;
+import session.BiddingFacade;
 import session.CategoryFacade;
 import session.UsergroupFacade;
 
@@ -51,6 +51,9 @@ public class ControllerServlet extends HttpServlet {
 
     @EJB
     private AccountFacade accountFacade;
+    
+    @EJB
+    private BiddingFacade biddingFacade;
     
     @EJB
     private UsergroupFacade userGroupFacade;
@@ -226,13 +229,26 @@ public class ControllerServlet extends HttpServlet {
             String adId = request.getQueryString();
 
             if (adId != null) {
-
                 // get selected advertisement
                 selectedAd = advertisementFacade.find(Integer.parseInt(adId));
 
                 // place selected advertisement in request scope
                 request.setAttribute("selectedAd", selectedAd);
             }
+        } else if (userPath.equals("/doPlaceBidding")) {
+            
+            String adId = request.getParameter("selectedAdId");
+            
+            Advertisement ad = advertisementFacade.find(Integer.parseInt(adId));
+            
+            Bidding bidding = new Bidding();
+            bidding.setAccountIdaccount(accountFacade.getAccountByUsername(user));
+            bidding.setAdvertisementIdadvertisement(ad);
+            bidding.setAmount(BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount"))));
+            
+            biddingFacade.create(bidding);
+            
+            request.getRequestDispatcher("/advertisement?" + adId).forward(request, response);
         }
 
         // use RequestDispatcher to forward request internally
