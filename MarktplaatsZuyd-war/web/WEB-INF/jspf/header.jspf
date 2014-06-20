@@ -21,7 +21,7 @@
                                 <a href="categories">Categorieën</a>
                             </c:when>
                             <c:otherwise>
-                                Welkom, ${pageContext.request.remoteUser} |
+                                Welkom, <a href="changeAccount?${pageContext.request.remoteUser}">${pageContext.request.remoteUser}</a> |
                                 <a href="logout">Uitloggen</a> |
                                 <c:if test="${!pageContext.request.isUserInRole('admin')}">
                                     <a href="placeAd">Advertentie plaatsen</a> |

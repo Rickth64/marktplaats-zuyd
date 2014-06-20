@@ -8,7 +8,14 @@
 
 <div id="leftColumn">
     <div id="pageTextLeft">
-        <b>Gegevens van verkoper '${selectedAd.accountIdaccount.username}'</b>
+        <c:choose>
+            <c:when test="${selectedAd.accountIdaccount.username == pageContext.request.remoteUser || pageContext.request.isUserInRole('admin')}">
+                <b>Gegevens van verkoper '<a href="changeAccount?${selectedAd.accountIdaccount.username}">${selectedAd.accountIdaccount.username}</a>'</b>
+            </c:when>
+            <c:otherwise>
+                <b>Gegevens van verkoper '${selectedAd.accountIdaccount.username}'</b>
+            </c:otherwise>
+        </c:choose>
         <c:if test="${selectedAd.contactemail != ''}">
             <p>e-mail: ${selectedAd.contactemail}</p>
         </c:if>
@@ -26,11 +33,11 @@
                         <c:choose>
                             <c:when test="${bidding.accountIdaccount.username == pageContext.request.remoteUser || pageContext.request.isUserInRole('admin')}">
                                 <p>&#8364; ${bidding.amount} <a href="changeBidding?${bidding.idbidding}">(wijzigen)</a><br />geboden door '${bidding.accountIdaccount.username}'</p>
-                            </c:when>
-                            <c:otherwise>
+                                </c:when>
+                                <c:otherwise>
                                 <p>&#8364; ${bidding.amount}<br />geboden door '${bidding.accountIdaccount.username}'</p>
-                            </c:otherwise>
-                        </c:choose>
+                                </c:otherwise>
+                            </c:choose>
                     </li>
                 </c:forEach>
             </ul>
