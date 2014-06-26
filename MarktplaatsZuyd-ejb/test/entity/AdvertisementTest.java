@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
  */
 public class AdvertisementTest {
     
+    private static Advertisement instance;
+    
     public AdvertisementTest() {
     }
     
@@ -34,6 +36,7 @@ public class AdvertisementTest {
     
     @Before
     public void setUp() {
+        instance = new Advertisement(313, "title of the ad", "descriptionnnnnn", BigDecimal.valueOf(123.78), "seller@hotmail.com", "0612345678", "Homestreet 123");
     }
     
     @After
@@ -46,12 +49,9 @@ public class AdvertisementTest {
     @Test
     public void testGetIdadvertisement() {
         System.out.println("getIdadvertisement");
-        Advertisement instance = new Advertisement();
-        Integer expResult = null;
+        Integer expResult = 313;
         Integer result = instance.getIdadvertisement();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,11 +60,9 @@ public class AdvertisementTest {
     @Test
     public void testSetIdadvertisement() {
         System.out.println("setIdadvertisement");
-        Integer idadvertisement = null;
-        Advertisement instance = new Advertisement();
+        Integer idadvertisement = 1234;
         instance.setIdadvertisement(idadvertisement);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(idadvertisement, instance.getIdadvertisement());
     }
 
     /**
@@ -73,12 +71,9 @@ public class AdvertisementTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Advertisement instance = new Advertisement();
-        String expResult = "";
+        String expResult = "title of the ad";
         String result = instance.getName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -87,11 +82,9 @@ public class AdvertisementTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String name = "";
-        Advertisement instance = new Advertisement();
+        String name = "another title!";
         instance.setName(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(name, instance.getName());
     }
 
     /**
@@ -100,12 +93,9 @@ public class AdvertisementTest {
     @Test
     public void testGetDescription() {
         System.out.println("getDescription");
-        Advertisement instance = new Advertisement();
-        String expResult = "";
+        String expResult = "descriptionnnnnn";
         String result = instance.getDescription();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -114,11 +104,9 @@ public class AdvertisementTest {
     @Test
     public void testSetDescription() {
         System.out.println("setDescription");
-        String description = "";
-        Advertisement instance = new Advertisement();
+        String description = "I am selling this thing :) !";
         instance.setDescription(description);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(description, instance.getDescription());
     }
 
     /**
@@ -127,12 +115,9 @@ public class AdvertisementTest {
     @Test
     public void testGetPrice() {
         System.out.println("getPrice");
-        Advertisement instance = new Advertisement();
-        BigDecimal expResult = null;
+        BigDecimal expResult = BigDecimal.valueOf(123.78);
         BigDecimal result = instance.getPrice();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -141,11 +126,9 @@ public class AdvertisementTest {
     @Test
     public void testSetPrice() {
         System.out.println("setPrice");
-        BigDecimal price = null;
-        Advertisement instance = new Advertisement();
+        BigDecimal price = BigDecimal.valueOf(0.00);
         instance.setPrice(price);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(price, instance.getPrice());
     }
 
     /**
@@ -154,12 +137,9 @@ public class AdvertisementTest {
     @Test
     public void testGetContactemail() {
         System.out.println("getContactemail");
-        Advertisement instance = new Advertisement();
-        String expResult = "";
+        String expResult = "seller@hotmail.com";
         String result = instance.getContactemail();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -168,11 +148,9 @@ public class AdvertisementTest {
     @Test
     public void testSetContactemail() {
         System.out.println("setContactemail");
-        String contactemail = "";
-        Advertisement instance = new Advertisement();
+        String contactemail = "newmail@mymail.nl";
         instance.setContactemail(contactemail);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(contactemail, instance.getContactemail());
     }
 
     /**
@@ -181,12 +159,9 @@ public class AdvertisementTest {
     @Test
     public void testGetContactphone() {
         System.out.println("getContactphone");
-        Advertisement instance = new Advertisement();
-        String expResult = "";
+        String expResult = "0612345678";
         String result = instance.getContactphone();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -195,11 +170,9 @@ public class AdvertisementTest {
     @Test
     public void testSetContactphone() {
         System.out.println("setContactphone");
-        String contactphone = "";
-        Advertisement instance = new Advertisement();
+        String contactphone = "0031455250000";
         instance.setContactphone(contactphone);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(contactphone, instance.getContactphone());
     }
 
     /**
@@ -208,12 +181,9 @@ public class AdvertisementTest {
     @Test
     public void testGetContactaddress() {
         System.out.println("getContactaddress");
-        Advertisement instance = new Advertisement();
-        String expResult = "";
+        String expResult = "Homestreet 123";
         String result = instance.getContactaddress();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -222,121 +192,9 @@ public class AdvertisementTest {
     @Test
     public void testSetContactaddress() {
         System.out.println("setContactaddress");
-        String contactaddress = "";
-        Advertisement instance = new Advertisement();
+        String contactaddress = "new address 321";
         instance.setContactaddress(contactaddress);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getBiddingCollection method, of class Advertisement.
-     */
-    @Test
-    public void testGetBiddingCollection() {
-        System.out.println("getBiddingCollection");
-        Advertisement instance = new Advertisement();
-        Collection<Bidding> expResult = null;
-        Collection<Bidding> result = instance.getBiddingCollection();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setBiddingCollection method, of class Advertisement.
-     */
-    @Test
-    public void testSetBiddingCollection() {
-        System.out.println("setBiddingCollection");
-        Collection<Bidding> biddingCollection = null;
-        Advertisement instance = new Advertisement();
-        instance.setBiddingCollection(biddingCollection);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getCategoryIdcategory method, of class Advertisement.
-     */
-    @Test
-    public void testGetCategoryIdcategory() {
-        System.out.println("getCategoryIdcategory");
-        Advertisement instance = new Advertisement();
-        Category expResult = null;
-        Category result = instance.getCategoryIdcategory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setCategoryIdcategory method, of class Advertisement.
-     */
-    @Test
-    public void testSetCategoryIdcategory() {
-        System.out.println("setCategoryIdcategory");
-        Category categoryIdcategory = null;
-        Advertisement instance = new Advertisement();
-        instance.setCategoryIdcategory(categoryIdcategory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getAccountIdaccount method, of class Advertisement.
-     */
-    @Test
-    public void testGetAccountIdaccount() {
-        System.out.println("getAccountIdaccount");
-        Advertisement instance = new Advertisement();
-        Account expResult = null;
-        Account result = instance.getAccountIdaccount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setAccountIdaccount method, of class Advertisement.
-     */
-    @Test
-    public void testSetAccountIdaccount() {
-        System.out.println("setAccountIdaccount");
-        Account accountIdaccount = null;
-        Advertisement instance = new Advertisement();
-        instance.setAccountIdaccount(accountIdaccount);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of hashCode method, of class Advertisement.
-     */
-    @Test
-    public void testHashCode() {
-        System.out.println("hashCode");
-        Advertisement instance = new Advertisement();
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of equals method, of class Advertisement.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object object = null;
-        Advertisement instance = new Advertisement();
-        boolean expResult = false;
-        boolean result = instance.equals(object);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(contactaddress, instance.getContactaddress());
     }
 
     /**
@@ -345,12 +203,9 @@ public class AdvertisementTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Advertisement instance = new Advertisement();
-        String expResult = "";
+        String expResult = "entity.Advertisement[ idadvertisement=313 ]";
         String result = instance.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

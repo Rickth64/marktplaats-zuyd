@@ -93,6 +93,16 @@ public class Advertisement implements Serializable {
         this.name = name;
         this.description = description;
     }
+    
+    public Advertisement(Integer idadvertisement, String name, String description, BigDecimal price, String contactemail, String contactphone, String contactaddress) {
+        this.idadvertisement = idadvertisement;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.contactemail = contactemail;
+        this.contactphone = contactphone;
+        this.contactaddress = contactaddress;
+    }
 
     public Integer getIdadvertisement() {
         return idadvertisement;

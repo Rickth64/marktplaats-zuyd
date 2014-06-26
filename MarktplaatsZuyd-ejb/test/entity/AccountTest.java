@@ -211,7 +211,8 @@ public class AccountTest {
     /**
      * Test of equals method, of class Account.
      */
-    //@Test
+    /*
+    @Test
     public void testEquals() {
         System.out.println("equals");
         Object object = null;
@@ -221,7 +222,7 @@ public class AccountTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of toString method, of class Account.
